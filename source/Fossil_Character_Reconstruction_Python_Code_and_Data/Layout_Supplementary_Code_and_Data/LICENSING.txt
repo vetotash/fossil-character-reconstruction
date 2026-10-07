@@ -1,0 +1,24 @@
+LICENSING AND ATTRIBUTION
+
+Study: Historical information patterns and probabilistic character reconstruction in fossil vertebrates
+
+Original software: MIT; see LICENSE_CODE_MIT.txt.
+Original simulated data, derived results, figures and documentation: CC BY 4.0;
+see LICENSE_DATA_CC_BY_4_0.txt. These grants apply only to original contributions
+in which the study's authors hold rights; they do not override upstream terms.
+
+Third-party source matrices/trees and extracted source material retain their
+original attribution and licence. Public access is not treated as evidence of
+permission to relicense. Mixed and processed files can contain upstream content;
+our grant covers our original contributions only. THIRD_PARTY_NOTICES.tsv points
+to source-specific evidence and records unresolved scope explicitly. Local
+source records are preserved as acquired, including dated qualifications.
+
+Dependencies in requirements.txt are obtained separately and retain their own
+licences. No licence is granted here for PAUP or its separately obtained runtime
+libraries. This archive does not redistribute those external executables.
+
+For anonymous review, the generic copyright attribution refers to the authors
+and contributors named in the associated published study and repository record.
+A repository DOI and author list must come from the actual repository record;
+none has been invented or registered by packaging these files.

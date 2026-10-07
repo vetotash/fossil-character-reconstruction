@@ -1,0 +1,6 @@
+# Optional: legacy source-document acquisition/extraction scripts only.
+# Not needed for the standard numerical verification/replay commands.
+python-docx
+pypdf
+PyMuPDF
+lxml

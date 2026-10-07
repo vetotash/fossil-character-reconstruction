@@ -1,0 +1,24 @@
+ORIGINAL DATA, RESULTS AND FIGURES LICENCE
+SPDX-License-Identifier: CC-BY-4.0
+
+The authors' original simulated data, numerical analysis results, figures and
+non-software documentation contributed to this study are licensed under the
+Creative Commons Attribution 4.0 International licence, to the extent that the
+authors hold rights in those contributions.
+
+Licence and standard legal terms:
+https://creativecommons.org/licenses/by/4.0/
+https://creativecommons.org/licenses/by/4.0/legalcode.en
+
+Attribution: cite the associated study, Historical information patterns and probabilistic character reconstruction in fossil vertebrates, and the versioned repository
+record once assigned. Retain the upstream citations and indicate subsequent
+changes. Author names and a persistent identifier have not been supplied for
+this review package; no names or DOI are fabricated here.
+
+Original third-party matrices, trees, source publications, and material copied
+or transformed from them retain their upstream conditions. This licence does
+not grant new rights in those sources, remove a noncommercial restriction, or
+assert that publicly downloadable material has an open redistribution licence.
+For processed matrices and source-derived layouts, this grant covers only the
+authors' additions; underlying source rights are unchanged. Consult the source
+notices and the source register before redistributing such material.

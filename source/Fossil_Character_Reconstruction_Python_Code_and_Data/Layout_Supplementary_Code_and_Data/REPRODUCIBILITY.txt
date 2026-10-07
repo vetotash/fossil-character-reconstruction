@@ -1,0 +1,126 @@
+REPRODUCIBILITY AND ARCHIVE BOUNDARIES
+
+Current author verification
+The author has rerun the analysis code and independently verified the
+source-based judgements and scientific interpretations. The author confirmed numerical
+agreement with all retained manuscript, figure, table and archive data. Previously
+prepared outputs were retained because the rerun outputs could not be integrated
+into the assembled submission. See AUTHOR_VERIFICATION_STATEMENT.txt for the
+AI-use declaration and the scope of this completed independent human review.
+Earlier archived receipts retain the scope and date of the checks they record.
+
+This file distinguishes the frozen results used in the manuscript from subsequent
+re-execution. Consult README.txt for commands and DATA_DICTIONARY.tsv for fields.
+
+1. FROZEN HISTORICAL-LAYOUT EXPERIMENT
+
+layout_experiment/simulation/results/ contains 180 latent matrices, 360 masked
+arm matrices and 360 original evaluation NPZ files. Hashes of every regenerated
+truth and mask match the original matrix registry. Evaluation arrays were
+recovered as original archive members. matrix_results.csv retains all original
+cell scores and downstream metrics, and FIT_MANIFEST.json retains the original
+360 prediction NPZ hashes. These files define the numerical results cited in
+the manuscript. Their original model-diagnostic JSON and probability/completion
+NPZ files were not recovered as a complete cohort.
+
+The frozen estimator implementation is unchanged. Fits receive masked X and the
+target indicator only. Generating truth is opened after fitting, for evaluation.
+A refit must not be described as recovery of the original fitting session.
+
+2. COMPLETE REFIT ENTRY POINT
+
+The shipped refit_20261006/ contains a completed new 360-arm reconstruction.
+All 360 prediction files match original recorded SHA256 hashes; all nine arrays
+in every new evaluation file exactly equal the original saved arrays. The two
+available original result tables agree to 1e-12. The new condition summary was
+checked against independent reaggregation of the original matrix-level table
+(maximum numerical difference 2.85e-14). These are observed comparisons from executed fits
+and newly computed scoring, not claims inferred from the presence of code.
+
+  python -m pip install -r requirements.txt
+  python reproducibility/refit_original.py --output ../layout_refit --workers 6
+
+To continue an interrupted new run with the same source files and versions:
+
+  python reproducibility/refit_original.py --output ../layout_refit --workers 6 --resume
+
+The wrapper uses the unchanged original generator, fit_worker.fit_file,
+experiment.evaluate_one and experiment.summarize. It only adds scheduling,
+checkpointing and comparisons. It writes to a new destination; the original
+archived results are not replaced. All 540 generated input/truth files must
+match original registry hashes. Before fitting resumes, completed probability
+arrays and packed states are validated against their bound metadata and hashes.
+Source or dependency-version changes prevent resume. Evaluation checkpoints bind
+their prediction, scoring source and evaluation hashes.
+
+The original full fit used eight workers and recorded 5671 seconds; runtime
+varies with hardware and concurrent load. All probabilities, 512 completions for
+each of six schemes, fitted Mk model records and per-character diagnostics are
+retained in a new run. The scikit-learn estimator objects themselves are not
+pickled: tabular fits are reproducible from masked inputs, pinned estimator
+settings and seeds; the probabilities and predictions actually used are saved.
+
+The read-only verifier for a finished run is:
+
+  python reproducibility/verify_refit.py --input ../layout_refit
+
+When the packaged refit is present, run.py verify invokes the same check.
+REFIT_COMPARISON.json reports exact prediction-byte agreement against original
+FIT_MANIFEST hashes, exact equality of all nine evaluation arrays for all arms,
+and agreement of the two available original result tables to 1e-12. The third
+new table, scenario_summary.csv, is checked against independent reaggregation
+of the archived matrix-level rows; that original summary file was not present.
+New metadata contain new
+elapsed times. A matching result does not imply recovery of the original logs.
+Any differences remain explicit and must not silently update the manuscript.
+The initial execution completed fitting and scoring before its comparator stopped
+because scenario_summary.csv was absent from the original archive. The executed
+wrapper is preserved verbatim in refit_20261006/EXECUTED_WRAPPER_SOURCE.txt;
+POSTPROCESSING_FIX.json binds the corrected comparator and documents that no
+fitting or scoring functions changed and no scientific calculations were repeated.
+
+3. FIXED-TARGET EXTENSION
+
+fixed_target/results/ contains all 180 additional fitted arms with full
+probabilities, model diagnostics, packed states and evaluation arrays. The
+empirical baseline retains the original 180 saved evaluation arrays and cell
+scores. The fixed-target experiment preserves empirical target cells T while
+randomizing observed O versus unavailable U labels. It is not interchangeable
+with full O/U/T permutation in the original experiment.
+
+  python run.py audit-fixed --output fixed_target/results --report ../fixed_audit.json --workers 4
+
+4. REPLAY AND VALIDATION
+
+  python run.py verify
+  python run.py rescore --output ../layout_rescore
+  python run.py figure2 --output ../layout_figure2
+  python run.py figures --output ../layout_supplementary_figures
+  python -m unittest discover -s distribution_analysis -p 'test_*.py' -v
+  python -m unittest discover -s fixed_target -p 'test_*.py' -v
+
+Rescoring saved D draws verifies arithmetic but is not a model refit. The
+Figure S3 plotting input includes a frozen 600-matrix score table; the complete
+600-matrix benchmark belongs to the separate Simulation code-and-data package.
+
+5. DATA AND REUSE
+
+Character indices and cell coordinates are zero-based unless a field explicitly
+states otherwise. Binary matrix code -1 means unavailable, whereas 0 and 1 are
+character states. Layout labels are 0=observed, 1=unavailable, 2=target. The target
+indicator is boolean. Probabilities and error scores are dimensionless; L, M and
+D count parsimony steps. No target state in these simulations is an empirical
+anatomical observation: true states are generated by the specified binary Mk
+process. Documentary empirical templates identify layouts, not ground truth.
+
+Frozen sources and their attributions reside in empirical_bridge/ and provenance/.
+See the package licensing notice for the separate treatment of third-party
+source material and original code/derived data. Source-publication articles are
+not included. No external database accession is assigned by these local files.
+
+Consolidated-release note (7 October 2026)
+This module is distributed inside one combined code/data archive. See ../README.txt
+and ../CLEANUP_MANIFEST.tsv. Redundant rendered figures and superseded packaging
+receipts were omitted; scientific source files, arrays, original execution logs
+and source-binding manifests retain their original bytes. Figure scripts and
+figure data tables remain. Review limits recorded above still apply.

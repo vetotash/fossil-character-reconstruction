@@ -1,0 +1,200 @@
+SIMULATION PACKAGE: DATA INDEX AND REPRODUCIBILITY GUIDE
+
+Current author verification
+The author has rerun the analysis code and independently verified the
+source-based judgements and scientific interpretations. The author confirmed numerical
+agreement with all retained manuscript, figure, table and archive data. Previously
+prepared outputs were retained because the rerun outputs could not be integrated
+into the assembled submission. See AUTHOR_VERIFICATION_STATEMENT.txt for the
+AI-use declaration and the scope of this completed independent human review.
+Earlier archived receipts retain the scope and date of the checks they record.
+
+Scope of this documentation update
+This guide, FILE_CATALOG.tsv and DATA_DICTIONARY.tsv describe the supplied files.
+The documentation pass inspected file paths, tabular fields, JSON structure,
+array dtypes/shapes and explicit missing values. It did not rerun the 600 fits,
+regenerate scientific outcomes, or turn an archived validation receipt into a
+new validation claim. Existing numerical outputs and scientific scripts were
+not edited. Read the original module READMEs for full scientific definitions.
+
+Finding a file and understanding a field
+FILE_CATALOG.tsv contains every relative file path. Its schema_id links to
+DATA_DICTIONARY.tsv. path_pattern groups repeated matrix/scenario files; the
+catalogue always supplies their actual paths. Schemas combine optional fields
+observed over every file in a family, rather than assuming every JSON object or
+oracle scenario has every field. For example, oracle draw arrays occur only in
+six-tip scenarios. Files are not converted or rearranged by these indexes.
+
+The catalogue columns are:
+  path: exact package-relative path; format: serialization/file format;
+  module: analysis component; role: what this artifact represents;
+  schema_id: dictionary join key, or NOT_TABULAR/DOCUMENTATION for prose/code;
+  dictionary: dictionary location, or reason field definitions do not apply;
+  rows_or_members: data rows for CSV/TSV, named arrays for NPZ, or root members
+    for JSON (not an assertion about independent sample size);
+  bytes: file size at indexing; blank for the catalogue itself and the mutable
+    whole-package SHA256 list, avoiding a self-referential size dependency;
+  source: module documentation and/or producing implementation.
+
+The dictionary columns are:
+  schema_id/path_pattern/format: join and format information;
+  field: literal CSV column or NPZ key; JSON dots indicate nesting, [*] list
+    elements, and {sha256}, {index}, {file_path}, {matrix_id} dynamic map keys;
+  definition/units: meaning and measurement scale, or structural/text type;
+  dtype_observed: types read from the supplied files, not a conversion;
+  shape_observed: every distinct array shape observed in that family, () for
+    scalar values; ragged marks lists with unequal nested lengths;
+  axes_or_row_unit: axis/row interpretation;
+  missingness: actual observed null, non-finite and blank/empty counts plus
+    documented sentinels. These counts describe values/containers, not cells
+    excluded from a scientific analysis. Absent optional JSON keys are not
+    counted as null. Zero is not missing unless explicitly stated;
+  scope/source: coverage and the original documentation/implementation.
+JSON and compressed JSON contain provenance as well as numeric results. A
+field described as a recorded check is the saved check outcome, not a fresh
+execution. Placeholder paths in historical metadata are not run instructions.
+Python's json loader accepts the archived NaN tokens; strict JSON consumers
+must handle these original undefined consensus-precision values explicitly.
+
+Common data conventions
+NPZ files open with numpy.load(path, allow_pickle=False). No object unpickling
+is required. Matrix IDs sSS_rRRR use zero-based scenario and replicate indexes.
+In the fitted benchmark, arrays use zero-based taxon/character indexes, states
+0/1 and -1 for an unknown observed cell. Eight complete anchors occupy columns
+0--7; response characters occupy columns 8--39. There are 48 tips, 40 characters,
+12 scenarios and 50 independent matrices per scenario. Each scheme has 512
+completion draws; draws are nested computations, not independent replicates.
+Probability method order: mode, knn5, logistic, extra_trees, nj_mk.
+Completion scheme order: mode, knn5, logistic, extra_trees, nj_mk, nj_mk_joint.
+Packed completions use NumPy big bit order and target_indices row order; discard
+padding bits by using count=len(target_indices) when unpacking.
+
+Oracle method order: oracle_joint, product_marginals, sharpened_product.
+Pattern ID bit j denotes tip j. Missing-mask bits must be read together with
+observed_state_bits: cleared missing bits are not observed state-zero values.
+There are 48 scenarios with 100 independent matrices each. Six-tip scenarios
+have 32 characters; ten-tip scenarios have 64. Exact PMF padding zeroes are zero
+probability, not missing observations. The six-tip topology module retains all
+105 labelled unrooted binary trees; MPT membership uses LITTLE-endian packed
+bits, 14 bytes per tree set. Do not confuse this with benchmark completion bits.
+
+D, L, M, D errors, interval widths and CRPS are in parsimony steps. D is a change
+in excess fixed-tree parsimony cost, not a topology-error statistic. Brier uses
+a sum across two classes (0--2); log loss uses natural logs (nats), with a 1e-12
+probability floor in fitted analyses. Normalized unrooted RF is split symmetric
+difference divided by 2*(n_tips-3). Rates are per generating/inferred branch
+length, not geological years. Interval inclusion uses inclusive endpoints.
+Empty cell groups yield blank within-group losses. Conditional exact-D-match
+statistics can be undefined when there are no matching draws. Original heuristic
+search records use JSON NaN/CSV blanks for precision of a split-free consensus.
+The amended search has defined precision. No missing values were imputed here.
+
+Software and provenance
+Use Python 3.12 and requirements.txt (NumPy 2.3.5, SciPy 1.17.0,
+scikit-learn 1.8.0, pandas 2.2.3, matplotlib 3.10.8). The exact-oracle producer
+records Python 3.12.14. Numerical packages are external dependencies, not
+vendored here. No PAUP executable, R installation, remote data retrieval or
+network access is needed once the environment is installed.
+methods/mk_baseline.py is documented by fit_adapter.py as a byte-identical copy
+of the same project's Round 14 historical module. The four tabular fitters
+reproduce the historical dinosaur_matched_pilot.predict interface with input
+checks and diagnostic instrumentation. External package licences are separate;
+consult LICENSING.txt and THIRD_PARTY_NOTICES.tsv for release scope.
+
+Commands: first change to this extracted package's root
+Create an environment outside the archive, then install the pinned requirements:
+  python -m pip install -r requirements.txt
+All output destinations below should be new sibling paths. Keep this delivered
+archive unchanged and preserve its checksum list for verification.
+
+1. Read-only numerical replay / checks, without fitting 600 models
+  python -B run_analysis.py verify --workers 2
+The wrapper supplies --no-refit to validation/validate_results.py. It checks the
+600 benchmark arrays, completions, metadata and summaries. It does not validate
+all oracle and topology modules merely by checking the benchmark. The optional
+--refit flag explicitly adds predetermined response-column refits; it is not a
+full benchmark reproduction and is not needed for saved-result replay.
+
+  python -B oracle/validation/replay_saved_arrays.py --output ../oracle_replay.json
+  python -B distribution_analysis/analyze_distributions.py --root . --output ../distribution_replay --workers 2
+  python -B topology_extension/validate_oracle_registry.py --oracle-root oracle --output ../topology_registry_check.json
+  python -B topology_extension/summarize_topology_extension.py --results topology_extension/results_amended --output ../table_s28_replay
+The distribution command reads all 600 saved forecasts and reconstructs their
+D draws; it does not refit predictors. The oracle replay checks exact PMFs and
+saved exhaustive optimum sets. These are numerical checks, not independent
+anatomical validation or proof of 48-tip global search optimality.
+
+2. Regenerate the full fitted-method benchmark (expensive)
+  python -B run_analysis.py reproduce --output ../simulation_new --workers 2
+This generates 600 matrices, fits predictors, samples completions, evaluates
+them and writes diagnostics. The destination must not already exist. Fixed
+seeds and versions aid reproducibility; floating-point/platform differences
+should be assessed from generated results, not assumed absent.
+
+3. Recreate oracle simulation and exhaustive six-tip topology
+  python -B oracle/simulation/exact_simulation.py --self-test
+  python -B oracle/simulation/exact_simulation.py --frozen-design oracle/ANALYSIS_PLAN.txt --output ../oracle_new
+The --frozen-design argument hashes an existing design artifact for provenance;
+the scientific design is implemented in the producer and saved in design.json.
+The original oracle generation and the following topology stage are separate:
+  python -B oracle/topology/run_topology.py --manifest oracle/topology/topology_input_manifest.json --output ../oracle_topology_new
+The command above rescores the SUPPLIED six-tip draws on all 105 trees. To score
+newly generated oracle draws, build a new input manifest pointing to those new
+files; do not mistake the supplied manifest for a pointer to ../oracle_new.
+For a complete new oracle-plus-topology run with the expected directory layout:
+  mkdir ../oracle_full_new
+  cp oracle/DESIGN_FREEZE.json ../oracle_full_new/DESIGN_FREEZE.json
+  python -B oracle/simulation/exact_simulation.py --frozen-design ../oracle_full_new/DESIGN_FREEZE.json --output ../oracle_full_new/simulation/results
+  python -B oracle/topology/prepare_manifest.py --simulation-results ../oracle_full_new/simulation/results --output ../oracle_full_new/topology_input_manifest.json
+  python -B oracle/topology/run_topology.py --manifest ../oracle_full_new/topology_input_manifest.json --output ../oracle_full_new/topology_results
+The new root must not exist before mkdir. prepare_manifest.py expects the freeze
+file two directories above simulation/results; the layout above satisfies that
+explicit source-code requirement without editing the producer.
+
+4. Repeat finite 48-tip heuristic tree searches
+  python -B topology_extension/run_topology_extension.py --root . --output ../topology_three_start_new --workers 2
+  python -B topology_extension/run_nj_amendment.py --root . --original-results ../topology_three_start_new --output ../topology_four_start_new --workers 6
+To repeat only the NJ addition while retaining supplied original endpoints:
+  python -B topology_extension/run_nj_amendment.py --root . --original-results topology_extension/results --output ../topology_amended_new --workers 6
+These searches reuse benchmark predictions; they do not refit 600 models.
+Eight fixed saved draws per scheme are used: 0,73,146,219,292,365,438,511.
+Original results/ uses three random starts. Main results_amended/ adds one
+matrix-derived NJ start per input, explicitly POST HOC after baseline failures.
+Strict improving NNI accepts at most 200 moves and does not take neutral moves.
+All distinct best encountered endpoints receive equal weight. They are not all
+global optima, posterior samples, or independent biological replicates. The
+known generating tree is used only for post-search evaluation. Results retain
+both incomplete-source and truth-complete finite-data baselines.
+
+5. Figure generation and commands with in-place writes
+run_analysis.py figures and figures/plot_supplementary_s2.py write Figure S2 and
+its input table into the package's figures directory. Run those only in a WORKING
+COPY. oracle/topology/refresh_summaries.py similarly rewrites saved topology CSVs
+and SUMMARY_REFRESH.json in its own results folder. They are not read-only
+verification commands. Their original source is intentionally unchanged.
+
+Interpretation boundaries
+The distributional CRPS decompositions and oracle-centering diagnostics are
+post hoc. Oracle-centering uses each matrix's evaluation truth to shift its own
+distribution and is not an improved forecast. The exact-oracle study knows the
+generating model/tree and does not rank practical fossil-data fitters. The
+six-tip exhaustive module proves only its finite enumeration/scoring results;
+it cannot establish global optimality of the 48-tip NNI heuristics. D agreement
+does not establish topology agreement, specimen-level anatomical truth, or a
+universally best completion method. No newly appointed expert review is implied.
+
+Rebuilding these documentation indexes
+  python -B documentation/build_indexes.py
+The generator reads every supplied CSV/TSV, NPZ and JSON (including gzip JSON)
+to collect union schemas, actual shapes and explicit missing-value counts.
+It joins them to the semantic mappings in its source and rewrites only the two
+root TSV indexes. It does not validate every scientific algorithm, run any
+fit/search, alter source results, or rewrite checksums. Regenerate indexes after
+adding/removing package files and before producing the final checksum list.
+
+Consolidated-release note (7 October 2026)
+This module is distributed inside one combined code/data archive. See ../README.txt
+and ../CLEANUP_MANIFEST.tsv. Redundant rendered figures and superseded packaging
+receipts were omitted; scientific source files, arrays, original execution logs
+and source-binding manifests retain their original bytes. Figure scripts and
+figure data tables remain. Review limits recorded above still apply.

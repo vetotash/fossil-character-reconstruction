@@ -1,0 +1,17 @@
+LICENSING OF THE CONSOLIDATED RELEASE
+
+Original analysis code and new Python orchestration code: MIT, as recorded in
+the module LICENSE_CODE_MIT.txt files. Original derived research materials:
+CC BY 4.0, as recorded in the module LICENSE_DATA_CC_BY_4_0.txt files.
+
+Third-party matrix inputs, code and documentary materials retain their original
+terms. Read each module's LICENSING.txt and THIRD_PARTY_NOTICES.tsv. In particular,
+Historical UPSTREAM_LICENCE_REVIEW.json records unresolved redistribution scope
+for S020 and the article-level CC BY-NC 4.0 terms associated with S021. This
+consolidation does not grant new rights over either source or erase that notice.
+Public availability does not itself establish an unrestricted redistribution
+licence. Publisher PDFs/full texts and third-party executables are not included.
+
+If a repository asks for one licence for the entire upload, explain the mixed
+upstream scope and preserve these notices; do not apply a blanket new grant to
+third-party material whose terms have not been established.

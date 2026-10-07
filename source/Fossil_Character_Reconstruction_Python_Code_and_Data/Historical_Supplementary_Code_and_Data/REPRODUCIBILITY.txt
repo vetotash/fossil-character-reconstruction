@@ -1,0 +1,315 @@
+Reproducibility scope and evidence
+
+Current author verification
+The author has rerun the analysis code and independently verified the
+source-based judgements and scientific interpretations. The author confirmed numerical
+agreement with all retained manuscript, figure, table and archive data. Previously
+prepared outputs were retained because the rerun outputs could not be integrated
+into the assembled submission. See AUTHOR_VERIFICATION_STATEMENT.txt for the
+AI-use declaration and the scope of this completed independent human review.
+Earlier archived receipts retain the scope and date of the checks they record.
+
+Historical information patterns and probabilistic character reconstruction in fossil vertebrates
+
+All paths below are relative to this archive unless stated otherwise. The
+commands distinguish calculations from saved results, new model fitting and
+new native scoring. Read README.txt for the scientific scope, DATA_DICTIONARY.tsv
+for fields and array axes, and FILE_CATALOG.tsv for individual supplied files.
+The new portable entry point was checked with one response-character smoke fit
+and a separate all-input hash check. No complete historical refit or native
+scoring was performed for this packaging revision.
+
+1. Recorded software environment
+
+The supplied source record
+source_data/original/morphology_workspace/morphology_project/environment_versions.json
+reports Python 3.12.14, NumPy 2.3.5, pandas 2.2.3, SciPy 1.17.0,
+scikit-learn 1.8.0 (the JSON key is sklearn), and matplotlib 3.10.8.
+requirements.txt pins those five library versions. The separate
+source_data/sensitivity/ENVIRONMENT.json records CPython 3.12.14 on Linux x86_64
+with glibc 2.39 and the same libraries. These are recorded environments, not
+claims that every operation needs every library or that other versions have
+been tested. full_source/old_refits/FIT_FREEZE.json and
+blocked_validation/results/EVALUATION_MANIFEST.json independently record the
+same NumPy, pandas, SciPy and scikit-learn versions; they do not separately
+record the Python patch version.
+
+source_data/sensitivity/ENVIRONMENT.json identifies PAUP 4.0a169 Ubuntu64.
+source_data/sensitivity/EXTERNAL_SOFTWARE.json records the executable hash,
+download-archive hashes and runtime-library hashes. Its executable SHA-256 is
+0e0b7a7d98c8d7a5664f1bfe29d0fe873743127d4d0b9ecc20a30bcb848517e3.
+The native runtime needs libgfortran.so.4 and libpython2.7.so.1.0. The latter
+is a dynamic-library dependency of this PAUP build; it does not mean the
+Python analysis scripts run under Python 2.7. No PAUP executable or these
+third-party runtime libraries is redistributed here.
+
+2. Saved numerical replay: portable entry point; no new fitting
+
+From this archive's root, with a Python 3.12.14 environment:
+
+  python -m pip install -r requirements.txt
+  python -B run_analysis.py verify
+  python -B run_analysis.py replay --output ../historical_replay
+
+The output directory must be new and outside this archive. The entry point
+checks the outer MANIFEST.json before either operation. It then recalculates
+state scores from saved categorical probabilities for all five histories and
+reconstructs fixed-tree summaries from saved native character lengths and
+minimum lengths. There are 2,254 later-target entries in the five prediction
+cohorts and 1,874 endpoints in the three downstream cohorts. The saved replay
+receipt reports 21,835 prediction rows across 50 state-summary groups, plus
+72 primary and 72 full-source reference summaries, with 72,000 draw-tree values
+per regime. These draw-tree values are not biological replicates.
+
+Evidence: run_analysis.py; primary/build_synthesis.py;
+primary/INPUT_MANIFEST.json; PACKAGE_VALIDATION.json -> relocation_replay.
+The replay compares numerical summaries at absolute tolerance 1e-10. It does
+not select targets, fit predictors, regenerate completion draws, search trees,
+or invoke PAUP. Matching saved arithmetic does not establish that those earlier
+steps can all be regenerated from raw publications.
+
+3. Diagnostic refit: new portable entry point and retained historical runners
+
+portable_diagnostic_refit.py is a new orchestrator around the authenticated
+archived instrumented_predict and instrumented_mk functions. It does not edit
+the frozen scripts, choose new targets or hyperparameters, or invoke PAUP.
+It supports tetrapods and dinosaurs under shared or full_source training, and
+ichthyosaurs under full_source training. For the first two histories it uses
+the archived response-excluded NJ trees; for ichthyosaurs it rebuilds the NJ
+tree exactly as the original full-source runner did and checks it against the
+archived response-excluded tree.
+
+Run from this archive's root; every output directory must be new and outside
+the delivered archive:
+
+  python -B portable_diagnostic_refit.py verify --history all --condition all --output ../historical_refit_input_check
+  python -B portable_diagnostic_refit.py smoke --history tetrapods --condition shared --output ../historical_refit_smoke
+  python -B portable_diagnostic_refit.py fit --history all --condition all --output ../historical_diagnostic_refit
+
+verify authenticates inputs without fitting. smoke chooses one history and
+condition, then the first archived response character in ascending order;
+--character ONE_BASED_ID can select another existing target character.
+fit uses all frozen target characters for the requested history/condition.
+The all/all command covers five history-condition combinations, not the
+separate blocked-validation experiment or all five historical source panels.
+Single-history examples are --history dinosaurs --condition full_source and
+--history ichthyosaurs --condition full_source.
+
+The wrapper checks each original runner's frozen source hash, every required
+fitting-input and estimator-dependency hash, and the frozen library versions.
+It maps only the documented old_refits locations and the two explicit
+ichthyosaur archive prefixes to current paths. It uses the root MANIFEST.json
+to authenticate the freeze documents and additional comparison outputs.
+It rechecks authenticated inputs after fitting. Hash mismatches or missing
+executable/matrix inputs stop execution; no hash check is disabled for moving
+paths. The wrapper's own current SHA-256 and environment are recorded.
+
+One documentary exception is explicit: full_source/ichthyosaur_refit/PROTOCOL.txt
+is listed in the original FIT_FREEZE.json but absent from this package. The
+wrapper records its expected hash and NOT_CHECKED_NOT_SUPPLIED status; it does
+not report that the original full-run gate passed. All other frozen entries
+remain mandatory and are checked. This new estimator-level orchestrator does
+not modify or bypass the frozen run_full_source.py file; that file's original
+entry point still has its original path and whole-run requirements.
+
+Each invocation writes RUN_STARTED.json, INPUT_VERIFICATION.json, execution.log
+and RUN_COMPLETED.json, or RUN_FAILED.json on failure. Fitting also writes
+per-condition forecast-only and evaluated prediction tables, current classifier
+and Mk diagnostics, progress/completion records, and per-row comparisons with
+archived probabilities. Forecasts are written before evaluation joins labels.
+Matching checks require identical hard predictions, state alphabets and training
+counts, with probability differences at most 1e-10. These are new execution
+records and are explicitly not labelled as original historical logs.
+
+The representative packaging smoke used tetrapods/shared, original character 6:
+five methods produced 30 prediction rows, all matching archived probabilities
+exactly (maximum difference 0.0). Extra Trees and logistic regression actually
+fitted; logistic used 44 iterations and the Mk optimizer succeeded. A separate
+all-history input check authenticated 38 distinct files and recorded the one
+unavailable protocol document. This verifies the representative execution and
+the available frozen inputs; it is not a full run of all supported fits, a
+fresh ichthyosaur fit, or native PAUP validation.
+
+The actual records from these new checks are supplied at
+reproducibility/diagnostic_smoke_20261006/smoke/ and
+reproducibility/diagnostic_smoke_20261006/input_check/. The smoke directory
+contains its RUN_STARTED/RUN_COMPLETED records, authenticated-input receipt,
+execution log, predictions and current fit diagnostics; input_check contains
+the separate no-fit verification receipts. They are preserved as generated,
+including command-line/output paths from this run, and do not replace any
+original results or historical receipts. These files document only this single
+response-character case plus input checks, not a complete historical rerun.
+
+Retained original diagnostic runners and receipts
+
+full_source/old_refits/run_refits.py can fit the supplied frozen tetrapod and
+dinosaur targets in the shared and full_source training conditions. It uses
+the vendored original predictor functions, fixed parameters and seeds, and
+archived response-excluded NJ trees. It authenticates its own source and every
+listed input against FIT_FREEZE.json. It does not redraw matched controls,
+recreate original curation, rebuild those archived trees or call PAUP.
+
+The supplied diagnostic_summary.csv reports 87 response characters for each
+tetrapod condition and 367 for each dinosaur condition: 908 response-condition
+fits and 24,685 prediction rows across the four runs. Its recorded maximum
+probability difference from the archived predictions is 0.0 in each run.
+The per-condition archive_probability_comparison.csv files preserve those
+comparisons. These are retained results of the diagnostic refit, not a new
+execution claim for the present package revision.
+
+To generate new fits while preserving the delivered results, start from the
+archive's parent directory and use a new working-copy name:
+
+  cp -a Historical_Supplementary_Code_and_Data Historical_Supplementary_Code_and_Data_diagnostic_refit
+  cd Historical_Supplementary_Code_and_Data_diagnostic_refit/full_source/old_refits
+  mv tetrapods tetrapods_supplied
+  mv dinosaurs dinosaurs_supplied
+  OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -B run_refits.py fit tetrapods dinosaurs
+  python -B summarize_diagnostics.py
+
+Do not run prepare: the authenticated inputs and FIT_FREEZE.json already exist.
+The fit creates new execution diagnostics and checks predictions against the
+archived shared/full-source probability tables with tolerance 1e-10. The final
+command summarizes the newly generated diagnostics and writes a new local
+OUTPUT_MANIFEST.json in the working copy. Neither those generated files nor
+new timings should be represented as original historical logs.
+
+The supplied full_source/old_refits/OUTPUT_MANIFEST.json is a historical
+receipt: it lists REFIT_CHECKS.json, FIT_STARTED.json, FIT_COMPLETED.json,
+fit_progress.json and fit_execution_diagnostics.json that are not present in
+the delivered old_refits directory. Thus summarize_diagnostics.py alone cannot
+rebuild the retained summary from this package before fitting creates its
+required execution records. Present evidence consists of FIT_FREEZE.json,
+the runner and vendor code, frozen inputs, predictions, fit_diagnostics.csv,
+archive_probability_comparison.csv and diagnostic_summary.csv.
+
+The preceding original-runner command covers two histories, not all five
+original historical predictors.
+full_source/ichthyosaur_refit/run_full_source.py retains its historical
+round12/restored/analysis source paths and original absolute-path hash records;
+it is not a portable all-history refit command. Its saved outputs remain
+available for numerical replay. Use the new wrapper above for the documented
+estimator-level relocation, subject to its explicit protocol-document exception.
+Reconstructing other historical fits requires their documented source layout
+and dependencies, not just running the root replay command.
+
+4. All 532 blocked treatments: separate old-label diagnostic
+
+blocked_validation/ contains 133 block-character cases, each paired with three
+count-matched random controls: 532 treatments and five method forecasts per
+treatment. The saved EVALUATION_MANIFEST.json reports all 532 treatments and
+11,640 forecast-cell rows, with no failed methods or incomplete comparisons.
+The fit stage rebuilds the response-excluded NJ tree for each treatment and
+fits the five predictors using old labels. Later-target labels are not used.
+This is a separate validation experiment; it does not reconstruct the original
+tetrapod control-selection procedure or refit the historical later targets.
+
+To fit all treatments again, start from the archive's parent directory:
+
+  cp -a Historical_Supplementary_Code_and_Data Historical_Supplementary_Code_and_Data_refit
+  cd Historical_Supplementary_Code_and_Data_refit/blocked_validation
+  mv results results_supplied
+  OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -B src/blocked_validation.py fit --source-root ../full_source --workers 2
+  python -B src/blocked_validation.py evaluate --source-root ../full_source
+  python -B -m unittest discover -s tests -v
+
+Retain the frozen split plan and vendor files; do not run plan again. With the
+results moved aside, fit should report 532 pending treatments. Without that
+step it resumes missing tasks and skips existing task artifacts. evaluate
+scores forecasts already present; it does not itself fit them. Both operations
+write files and belong in the working copy. --source-root changes the storage
+location while retaining the frozen source-hash checks. Compare new summaries
+with results_supplied. The delivered outer manifest no longer describes the
+regenerated files in a working copy.
+
+Evidence within blocked_validation/: README.md; protocol_freeze.json;
+split_plan.json; split_plan_freeze.json; results/tasks/;
+results/EVALUATION_MANIFEST.json. Also see the archive-root
+PACKAGE_VALIDATION.json -> blocked_relocated_evaluation and fresh_refit_probe.
+The package-validation receipt distinguishes evaluation of all saved treatments
+from a fresh relocation probe that refitted just one treatment with five
+methods. It does not document a second complete 532-treatment refit. The saved
+last_fit_run.json records a resumed batch rather than every original task in
+one uninterrupted invocation.
+
+5. Full native PAUP rescoring: external software and restored paths required
+
+Frozen completion arrays and native character-score arrays are included, with
+native_evidence.json records, scoring scripts and historical run manifests.
+Native rescoring means invoking PAUP again on the archived matrices/completions
+and fixed reference trees, retaining original character order, polymorphism,
+weights and minimum-length conventions. It is distinct from subtracting and
+summarizing the saved arrays, and fixed-tree rescoring is not a new topology
+search or predictor refit.
+
+Inspect the original scoring entry points and their manifests:
+  source_data/original/new_project_search/round8/run_probability_propagation.py
+  source_data/original/new_project_search/round8/replay_tetrapod.py
+  source_data/original/new_project_search/round8/probability_propagation/run_manifest.json
+  source_data/original/new_project_search/round8/replication/run_probability.py
+  source_data/original/new_project_search/round8/replication/probability/run_manifest.json
+  source_data/original/new_project_search/round10/ichthyosaur_propagation/run_probability.py
+  source_data/original/new_project_search/round10/ichthyosaur_propagation/RUN_MANIFEST.json
+  full_source/downstream/tetrapods/RUN_MANIFEST.json
+  full_source/downstream/dinosaurs/RUN_MANIFEST.json
+  full_source/downstream/ichthyosaurs/RUN_MANIFEST.json
+
+These scripts and receipts retain acquisition-workspace paths, executable
+locations and, in some cases, absolute frozen hash keys. Install the pinned
+native software separately and reconstruct the required directory layout and
+path configuration in a separate working copy before rerunning an individual
+native workflow, including LD_LIBRARY_PATH for its external runtime libraries.
+The supplied acquisition recipe is
+source_data/original/morphology_workspace/morphology_project/round5/tetrapod_consequence/download_software.py;
+historical recipe paths inside receipts may refer to their original workspace.
+Preserve supplied outputs and frozen evidence. This archive
+does not provide a single portable command that reruns all native scores across
+every history and sensitivity. In particular, replay_tetrapod.py defaults to
+input/draw checks with no native calls; its --rerun branch requires PAUP and
+refuses to overwrite the existing probability_propagation directory.
+
+Full native stdout/log files are not supplied. References to native.log,
+stdout.txt or their compressed forms in historical manifests are records of
+earlier runs, not evidence that those files are included. The retained native
+arrays and native_evidence.json receipts support inspection and numerical
+replay but do not constitute a fresh PAUP validation in this revision.
+
+The Laquintasaura sensitivity's Python scorer is checked against archived
+native lengths for its affected binary unordered character. That restricted
+agreement does not implement or validate the complete native scorer for every
+ordered or polymorphic historical character.
+
+6. Original tetrapod selector and fitting-log availability
+
+The original tetrapod matched-control selection program has not been found in
+this archive. Explicit evidence is
+source_data/original/new_project_search/round9/method_specification/NON_SNAPSHOT_INPUT_AVAILABILITY.json,
+whose tetrapod_original_control_selection_source field records that the
+original source was not found and frozen selections are available. The same
+directory's FITTING_DEPENDENCIES.json defines its scope as refitting frozen
+panels rather than regenerating original curation. The old non-snapshot loader
+in round2/run_comparison.py expects tetrapod_pairs/parsed_matrices.npz and
+tetrapod_pairs/pilot_predictions.csv; that tetrapod_pairs directory is absent
+from the delivered source tree.
+
+The selected identities and usable source snapshot are preserved at
+source_data/original/morphology_workspace/morphology_project/round2/inputs/tetrapods_frozen_targets.csv
+and tetrapods.npz, with hashes in snapshot_manifest.json. Authenticated copies
+also appear under full_source/old_refits/inputs/tetrapods/. These permit fitting
+the retained selection; they do not reveal every original selection decision
+or prove that the missing selector could be rerun from published raw matrices.
+
+An original shared-fit diagnostic table is supplied at
+source_data/original/morphology_workspace/morphology_project/round3/shared_training/tetrapods/fit_diagnostics.csv,
+alongside predictions.csv. It is a summary table, not the complete original
+classifier warning/iteration log. Later instrumented diagnostic-refit summaries
+are in full_source/old_refits/, subject to the missing execution-record limits
+in section 3. No claim is made that the original selector or complete original
+fitting logs have been recovered, and no substitute selector has been invented.
+
+Consolidated-release note (7 October 2026)
+This module is distributed inside one combined code/data archive. See ../README.txt
+and ../CLEANUP_MANIFEST.tsv. Redundant rendered figures and superseded packaging
+receipts were omitted; scientific source files, arrays, original execution logs
+and source-binding manifests retain their original bytes. Figure scripts and
+figure data tables remain. Review limits recorded above still apply.

@@ -1,0 +1,24 @@
+AUTHOR VERIFICATION AND AI USE — 7 OCTOBER 2026
+
+OpenAI ChatGPT and Codex were used to assist with literature searches and
+documentary source review, analysis code development and debugging, and language
+editing and formatting of the manuscript and supplementary materials. The sole
+author formulated the research questions, selected the methods, and led the
+scientific interpretation and conclusions. The author independently verified
+the source-based judgements and scientific interpretations, reran the analysis
+code, and confirmed numerical agreement between the rerun outputs and the
+retained manuscript, figures, tables and data archives. Previously prepared
+outputs were retained after this comparison confirmed agreement because the
+rerun outputs could not be integrated into the assembled submission. The author
+reviewed and approved all AI-assisted material and takes full responsibility
+for the accuracy, integrity and originality of the work.
+
+This declaration records the sole author's completed independent human
+verification. It does not claim new specimen observations, a blinded anatomical
+expert assessment, or that published reference assignments establish anatomical
+truth. Historical execution logs, audit receipts, frozen review classifications
+and blank expert-review forms retain their original dates and scope. They have
+not been rewritten as records of this subsequent verification. New packaging
+checks are separately identified in the consolidated RELEASE_VALIDATION.json.
+
+The author declares no competing interests.

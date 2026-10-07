@@ -1,0 +1,18 @@
+ORIGINAL ANALYSIS CODE LICENCE
+SPDX-License-Identifier: MIT
+
+Copyright (c) 2026 the authors and contributors to the associated study.
+
+The authors' original analysis software and its software documentation in this
+archive are licensed under the standard MIT License. The complete licence terms
+are incorporated by reference at https://opensource.org/license/mit .
+
+Associated study: Historical information patterns and probabilistic character reconstruction in fossil vertebrates.
+
+Scope: this grant covers only code authored for this study. It does not relicense
+external dependencies, third-party software, published matrices or trees, quoted
+source material, or other material belonging to upstream rights holders. Any
+upstream notice attached to a file remains in force. See LICENSING.txt and
+THIRD_PARTY_NOTICES.tsv for scope and source records. The generic attribution
+above preserves anonymous review; the published study and repository record
+identify the contributors. No proprietary PAUP executable is included.

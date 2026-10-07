@@ -1,0 +1,23 @@
+PORTABLE FIGURE S1 REPLAY
+
+From this package's root, after installing requirements.txt:
+
+  python -B replay_figure_s1.py --output ../figure_s1_replay
+
+The destination must be new and outside this package. The command writes a
+two-page PDF, two PNG previews, a saved-array replay receipt, and a Figure S1
+replay receipt. It does not overwrite delivered scientific data or figures.
+
+This additive Python entry point first checks all 14,400 saved exact
+matrix-method probability distributions and 472,800 optimum-set bitsets using
+oracle/validation/replay_saved_arrays.py. It then checks all 432 plotted summary
+values against saved matrix values and topology arrays, and calls the original
+coverage_page and topology_page plotting functions without changing them.
+
+The supplied original plotting command expects original historical run/audit
+receipts that are absent from this bundle. This portable entry point creates
+only explicitly new saved-output checks; it does not fabricate or replace those
+historical receipts. It does not generate simulations, refit models, enumerate
+new topology scores, or perform new tree searches. Rendering may differ in PDF
+metadata or fonts across platforms; numerical inputs and layout functions are
+retained. The original producer, plotting script and archived PDF remain intact.
