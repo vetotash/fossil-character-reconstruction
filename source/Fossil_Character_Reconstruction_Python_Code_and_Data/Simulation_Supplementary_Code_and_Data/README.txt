@@ -1,13 +1,9 @@
 SUPPLEMENTARY SIMULATION CODE AND DATA
 
-Current author verification
-The author has rerun the analysis code and independently verified the
-source-based judgements and scientific interpretations. The author confirmed numerical
-agreement with all retained manuscript, figure, table and archive data. Previously
-prepared outputs were retained because the rerun outputs could not be integrated
-into the assembled submission. See AUTHOR_VERIFICATION_STATEMENT.txt for the
-AI-use declaration and the scope of this completed independent human review.
-Earlier archived receipts retain the scope and date of the checks they record.
+Verification
+See AUTHOR_VERIFICATION_STATEMENT.txt for the declared AI assistance and the
+author's reported verification of this release. Archived receipts retain the
+dates and scope of the work they record.
 
 Scope
 This archive contains the 600-matrix fitted-method benchmark, the exact oracle

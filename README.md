@@ -12,11 +12,11 @@ Code and reproducibility data for **Historical information patterns and probabil
 
 Download **all 3 ZIP file(s)** listed above and extract their contents into the same empty working directory, preserving the original paths. For the three Submission_Code_Data ZIPs, use 7-Zip or Python's zipfile module (the archives include BZIP2 compression). Do not concatenate these ZIPs. The complete release contains 15,746 files across the Historical, Simulation and Layout modules. The GitHub-generated **Source code (zip)** download contains only this browsing copy, not the full research data.
 
-The `source/` directory provides unchanged Python files and selected documentation for browsing. Run analyses from the fully extracted release, following its README.txt and module instructions. Integrity check: `python -B run.py integrity`. No numerical data, algorithms or original execution logs were changed for GitHub publication.
+The `source/` directory provides Python analysis files and selected documentation for browsing. Analysis code is unchanged; documentation has been condensed in this browsing copy. Run analyses from the fully extracted release, following its README.txt and module instructions. Integrity check: `python -B run.py integrity`. The v1.0.0 release archives retain their original numerical data, algorithms and execution logs.
 
 ## Verification and scope
 
-The sole author reports rerunning the analysis code and independently checking source-based judgements and scientific interpretations, with numerical agreement against the retained outputs. The author substantively led the research questions, methods, interpretation and conclusions. The archive's author verification statement records AI assistance and the scope of the checks. Packaging checks are not a new full model refit or independent anatomical assessment.
+The [author verification statement](source/Fossil_Character_Reconstruction_Python_Code_and_Data/AUTHOR_VERIFICATION_STATEMENT.txt) records AI assistance and the author's reported reruns, source checks and scientific responsibility for this release. Packaging checks are separate from model refitting and anatomical assessment.
 
 Historical native parsimony rescoring requires the separately installed PAUP version documented in the archive. Python saved-output replay does not require PAUP. The original tetrapod selector and complete original execution logs remain unavailable, as documented in the release.
 
