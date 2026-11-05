@@ -111,9 +111,9 @@ relicensed by this combined archive. Publisher full-text articles are not bundle
 The sole author reports that the analysis code was rerun and source-based
 judgements and scientific interpretations independently checked. Numerical
 agreement was confirmed with the retained manuscript, tables, figures and data.
-AUTHOR_VERIFICATION_STATEMENT.txt records the actual AI assistance and the
-author's responsibility for research questions, methods, interpretation and
-conclusions. Existing historical logs and blank expert-review forms are retained
+AUTHOR_VERIFICATION_STATEMENT.txt records this verification report and its scope.
+The accompanying manuscript contains consolidated tool-use and contribution
+disclosures. Existing historical logs and blank expert-review forms are retained
 with their original scope; they are not rewritten to claim later work occurred.
 
 The current packaging checks are separately recorded in RELEASE_VALIDATION.json.

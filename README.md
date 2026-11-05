@@ -16,7 +16,7 @@ The `source/` directory provides Python analysis files and selected documentatio
 
 ## Verification and scope
 
-The [author verification statement](source/Fossil_Character_Reconstruction_Python_Code_and_Data/AUTHOR_VERIFICATION_STATEMENT.txt) records AI assistance and the author's reported reruns, source checks and scientific responsibility for this release. Packaging checks are separate from model refitting and anatomical assessment.
+See the accompanying manuscript for consolidated tool-use and contribution disclosures. The [author verification statement](source/Fossil_Character_Reconstruction_Python_Code_and_Data/AUTHOR_VERIFICATION_STATEMENT.txt) records the author's reported reruns, source checks and scientific responsibility for the original v1.0.0 release. Packaging checks are separate from model refitting and anatomical assessment.
 
 Historical native parsimony rescoring requires the separately installed PAUP version documented in the archive. Python saved-output replay does not require PAUP. The original tetrapod selector and complete original execution logs remain unavailable, as documented in the release.
 

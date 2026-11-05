@@ -1,9 +1,9 @@
 SUPPLEMENTARY SIMULATION CODE AND DATA
 
 Verification
-See AUTHOR_VERIFICATION_STATEMENT.txt for the declared AI assistance and the
-author's reported verification of this release. Archived receipts retain the
-dates and scope of the work they record.
+See AUTHOR_VERIFICATION_STATEMENT.txt for the author's reported verification of
+this release, and the accompanying manuscript for consolidated tool-use and
+contribution disclosures. Archived receipts retain their original dates and scope.
 
 Scope
 This archive contains the 600-matrix fitted-method benchmark, the exact oracle

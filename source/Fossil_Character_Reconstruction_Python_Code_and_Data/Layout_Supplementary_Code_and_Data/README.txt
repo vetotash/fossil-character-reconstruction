@@ -1,9 +1,9 @@
 LAYOUT SIMULATIONS: SUPPLEMENTARY CODE AND DATA
 
 Verification
-See AUTHOR_VERIFICATION_STATEMENT.txt for the declared AI assistance and the
-author's reported verification of this release. Archived receipts retain the
-dates and scope of the work they record.
+See AUTHOR_VERIFICATION_STATEMENT.txt for the author's reported verification of
+this release, and the accompanying manuscript for consolidated tool-use and
+contribution disclosures. Archived receipts retain their original dates and scope.
 
 This package contains the frozen 180-matrix paired historical-layout experiment,
 its post hoc distributional diagnostics, and the fixed-target observation-layout

@@ -1,9 +1,9 @@
 Historical character prediction code and data
 
 Verification
-See AUTHOR_VERIFICATION_STATEMENT.txt for the declared AI assistance and the
-author's reported verification of this release. Archived receipts retain the
-dates and scope of the work they record.
+See AUTHOR_VERIFICATION_STATEMENT.txt for the author's reported verification of
+this release, and the accompanying manuscript for consolidated tool-use and
+contribution disclosures. Archived receipts retain their original dates and scope.
 
 This archive accompanies Historical information patterns and probabilistic
 character reconstruction in fossil vertebrates. All new analysis scripts are Python.
